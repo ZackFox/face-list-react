@@ -1,4 +1,4 @@
-import { Action } from "redux";
+import { Action } from 'redux';
 
 import {
   RESUME_REQUEST,
@@ -9,9 +9,9 @@ import {
   RESUMELIST_FAILURE,
   ADD_RESUME,
   DELETE_RESUME,
-} from "../../constants";
+} from '../constants';
 
-import Resume from "../../store/resume/types";
+import Resume from '../store/types';
 
 interface ResumeRequest extends Action<typeof RESUME_REQUEST> {}
 
@@ -37,6 +37,11 @@ interface ResumeAdd extends Action<typeof ADD_RESUME> {
 
 interface ResumeDelete extends Action<typeof DELETE_RESUME> {
   resume: Resume;
+}
+
+export interface Credentials {
+  email: string;
+  password: string;
 }
 
 export type ResumeActions =
