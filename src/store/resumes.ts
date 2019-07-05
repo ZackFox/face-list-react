@@ -1,6 +1,6 @@
-import { Reducer } from "redux";
-import { ResumeActions } from "../../actions/resume/types";
-import { ResumeState } from "./types";
+import { Reducer } from 'redux';
+import { ResumeActions } from '../actions/types';
+import { ResumeState } from './types';
 
 import {
   RESUME_REQUEST,
@@ -11,13 +11,13 @@ import {
   RESUMELIST_FAILURE,
   ADD_RESUME,
   DELETE_RESUME,
-} from "../../constants";
+} from '../constants';
 
 const initialState: ResumeState = {
   current: null,
   list: [],
   loading: true,
-  errors: "",
+  errors: '',
 };
 
 export const resume: Reducer<ResumeState, ResumeActions> = (
@@ -29,7 +29,8 @@ export const resume: Reducer<ResumeState, ResumeActions> = (
       return { ...state, loading: true };
     }
     case RESUME_SUCCESS: {
-      return { ...state, loading: false, current: action.resume };
+      console.log(action.resume);
+      return { ...state, current: action.resume, loading: false };
     }
     case RESUME_FAILURE: {
       return { ...state, loading: false };
