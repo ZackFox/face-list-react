@@ -1,5 +1,5 @@
-export function numToAge(number: number, forms: string[]): string {
-  // ['год', 'года', 'лет']
+export function numToWord(number: number, words?: string[]): string {
+  const forms = words || ["год", "года", "лет"];
   const cases = [2, 0, 1, 1, 1, 2];
   let index;
 
