@@ -2,7 +2,7 @@ export interface User {
   id: number;
   firstname: string;
   lastname: string;
-  gender: 'мужчина' | 'женщина';
+  gender: "мужчина" | "женщина";
   city: string;
   age: number;
   email: string;
@@ -15,7 +15,7 @@ export default interface Resume {
   firstname: string;
   lastname: string;
   age: number;
-  gender: 'мужчина' | 'женщина';
+  gender: "мужчина" | "женщина";
   city: string;
   position: string;
   photo: string;
@@ -35,10 +35,10 @@ export interface ExpItem {
 }
 
 export class EduItem {
-  public name: string = '';
-  public degree: string = '';
-  public dateStart: string = '';
-  public dateEnd: string = '';
+  public name: string = "";
+  public degree: string = "";
+  public dateStart: string = "";
+  public dateEnd: string = "";
   [key: string]: string;
 }
 
@@ -51,7 +51,7 @@ export interface UserState {
 
 export interface ResumeState {
   readonly current: Resume | null;
-  readonly list: Resume[];
+  readonly list: { data: Resume[]; meta: { pages: number } };
   readonly loading: boolean;
   readonly errors?: string;
 }

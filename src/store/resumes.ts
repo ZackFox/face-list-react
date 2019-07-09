@@ -1,6 +1,6 @@
-import { Reducer } from 'redux';
-import { ResumeActions } from '../actions/types';
-import { ResumeState } from './types';
+import { Reducer } from "redux";
+import { ResumeActions } from "../actions/types";
+import { ResumeState } from "./types";
 
 import {
   RESUME_REQUEST,
@@ -11,13 +11,16 @@ import {
   RESUMELIST_FAILURE,
   ADD_RESUME,
   DELETE_RESUME,
-} from '../constants';
+} from "../constants";
 
 const initialState: ResumeState = {
   current: null,
-  list: [],
+  list: {
+    data: [],
+    meta: { pages: 0 },
+  },
   loading: true,
-  errors: '',
+  errors: "",
 };
 
 export const resume: Reducer<ResumeState, ResumeActions> = (
@@ -29,7 +32,6 @@ export const resume: Reducer<ResumeState, ResumeActions> = (
       return { ...state, loading: true };
     }
     case RESUME_SUCCESS: {
-      console.log(action.resume);
       return { ...state, current: action.resume, loading: false };
     }
     case RESUME_FAILURE: {
@@ -39,20 +41,24 @@ export const resume: Reducer<ResumeState, ResumeActions> = (
       return { ...state, loading: true, current: null };
     }
     case RESUMELIST_SUCCESS: {
-      return { ...state, loading: false, list: action.resumes };
+      return {
+        ...state,
+        loading: false,
+        list: { data: action.data, meta: action.meta },
+      };
     }
     case RESUMELIST_FAILURE: {
       return { ...state, loading: false };
     }
-    case ADD_RESUME: {
-      return { ...state, list: [...state.list, action.resume] };
-    }
-    case DELETE_RESUME: {
-      const updated = [...state.list].filter(
-        item => item.id !== action.resume.id,
-      );
-      return { ...state, list: updated };
-    }
+    // case ADD_RESUME: {
+    //   return { ...state, list: [...state.list, action.resume] };
+    // }
+    // case DELETE_RESUME: {
+    //   const updated = [...state.list.data].filter(
+    //     item => item.id !== action.resume.id,
+    //   );
+    //   return { ...state, list:{data updated }};
+    // }
     default:
       return state;
   }
