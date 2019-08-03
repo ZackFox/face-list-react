@@ -1,56 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router";
+import { connect } from "react-redux";
 
-import Resume from '../store/types';
-import { AppState } from '../store';
+import Resume from "../store/types";
+import { AppState } from "../store";
 
-import WithLoading from '../helpers/withLoading';
-import { getResumesList } from '../actions/resumeActions';
+import { getResumesList } from "../actions/resumeActions";
 
-import ResumeList from '../components/ResumeList/ResumeList';
-import Filter from '../components/Filter/Filter';
-import Pagination from '../components/Pagination/Pagination';
+import ResumeList from "../components/ResumeList/ResumeList";
+import Filter from "../components/Filter/Filter";
+import Pagination from "../components/Pagination/Pagination";
+import LoadingBox from "../components/LoadingBox/LoadingBox";
+import SideBar from "../components/Filter/Filter";
 
 interface HomeProps extends RouteComponentProps<{ numPage: string }> {
   resumes: Resume[];
+  meta: { pages: number };
   loading: boolean;
   getResumesList: (numPage: number, querry: string) => void;
 }
 
 const HomePage: React.FunctionComponent<HomeProps> = props => {
-  const { location, match, loading, resumes, getResumesList } = props;
-  const search = location.search;
+  const { location, match, loading, resumes, getResumesList, meta } = props;
   const currentPage = +match.params.numPage;
-  const [activePage, setActivePage] = useState();
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === "/") {
       props.history.push(`page/1${location.search}`);
     }
     getResumesList(currentPage, location.search);
   }, [location.pathname, location.search]);
 
-  const onChangePage = () => {};
-
   return (
-    <React.Fragment>
-      <div className="content-container">
-        <section className="content">
-          <ResumeList resumes={resumes} isLoad={!loading} />
-          <Pagination totalPages={22} />
-        </section>
-        <aside className="sidebar">
-          <Filter />
-        </aside>
+    <div className="page home-page">
+      <div className="wrapper">
+        {loading && <LoadingBox />}
+        <div className="content-container">
+          <section className="content">
+            <ResumeList resumes={resumes} isLoad={!loading} />
+            {meta.pages > 1 ? (
+              <Pagination totalPages={props.meta.pages} />
+            ) : null}
+          </section>
+          <SideBar />
+        </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
 export default connect(
   (state: AppState) => ({
-    resumes: state.resume.list,
+    resumes: state.resume.list.data,
+    meta: state.resume.list.meta,
     loading: state.resume.loading,
   }),
   { getResumesList },
