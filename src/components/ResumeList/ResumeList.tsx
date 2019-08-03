@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import Resume from "../../store/resume/types";
-import ResumeListItem from "../ResumeListItem/ResumeListItem";
-import "./ResumeList.css";
+import Resume from '../../store/types';
+import ResumeListItem from '../ResumeListItem/ResumeListItem';
+import './ResumeList.css';
 
 interface ResumeProps {
   resumes: Resume[];
+  isLoad: boolean;
 }
 
-const ResumeList: React.FunctionComponent<ResumeProps> = ({ resumes }) => {
-  if (resumes.length < 1) {
+const ResumeList: React.FunctionComponent<ResumeProps> = ({
+  resumes,
+  isLoad,
+}) => {
+  if (isLoad && resumes.length === 0) {
     return <p>список пуст</p>;
   }
 

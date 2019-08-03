@@ -1,10 +1,11 @@
 .resume-list-item {
   display: flex;
-  padding: 10px;
+  padding: 10px 15px;
   background: #fff;
   margin-bottom: 10px;
   text-align: left;
   text-decoration: none;
+  border: 1px solid #ccc;
 }
 
 .picture {
@@ -61,4 +62,35 @@
 
 .salary {
   font-size: 18px;
+}
+
+@media screen and (max-width: 550px) {
+  .resume-list-item {
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 20px;
+  }
+  .picture {
+    width: 200px;
+    height: 200px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .person-container {
+    flex-direction: column-reverse;
+  }
+  .p-left {
+    flex-direction: column;
+    width: 100%;
+  }
+  .p-right {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+
+  .person-info {
+    margin-bottom: 15px;
+  }
 }
