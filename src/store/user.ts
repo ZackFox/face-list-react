@@ -1,6 +1,6 @@
-import { Reducer } from 'redux';
-import { UserState } from './types';
-import cookies from 'js-cookie';
+import { Reducer } from "redux";
+import { UserState } from "./types";
+import cookies from "js-cookie";
 
 import {
   LOGIN_REQUEST,
@@ -9,15 +9,15 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
   LOGOUT,
-} from '../constants';
+} from "../actions/userActions";
 
-const token = cookies.get('token');
+const token = cookies.get("token");
 
 const initialState: UserState = {
   data: null,
   isLogined: !!token,
-  loading: true,
-  message: '',
+  loading: false,
+  message: "",
 };
 
 export const user: Reducer<UserState> = (state = initialState, action) => {
@@ -34,7 +34,7 @@ export const user: Reducer<UserState> = (state = initialState, action) => {
       };
     }
     case LOGIN_REQUEST: {
-      return { ...state, loading: true, message: '' };
+      return { ...state, loading: true, message: "" };
     }
     case LOGIN_SUCCESS: {
       return { ...state, isLogined: true };

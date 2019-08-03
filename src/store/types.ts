@@ -2,9 +2,7 @@ export interface User {
   id: number;
   firstname: string;
   lastname: string;
-  gender: "мужчина" | "женщина";
   city: string;
-  age: number;
   email: string;
   resumes: number[];
 }
@@ -15,30 +13,33 @@ export default interface Resume {
   firstname: string;
   lastname: string;
   age: number;
-  gender: "мужчина" | "женщина";
-  city: string;
-  position: string;
   photo: string;
+  gender: string;
+  city: string;
   email: string;
-  experience: ExpItem[];
-  education: EduItem[];
+  phone: string;
+  position: string;
+  salary: string;
+  experience: ExperienceItem[];
+  education: EducationItem[];
+  about: string;
   [key: string]: any;
 }
 
-export interface ExpItem {
-  name: string;
-  position: string;
-  description: string;
-  dateStart: string;
-  dateEnd: string;
+export class ExperienceItem {
+  name: string = "";
+  position: string = "";
+  description: string = "";
+  dateStart: string = "";
+  dateEnd: string = "";
   [key: string]: string;
 }
 
-export class EduItem {
-  public name: string = "";
-  public degree: string = "";
-  public dateStart: string = "";
-  public dateEnd: string = "";
+export class EducationItem {
+  name: string = "";
+  speciality: string = "";
+  dateStart: string = "";
+  dateEnd: string = "";
   [key: string]: string;
 }
 

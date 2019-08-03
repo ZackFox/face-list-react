@@ -9,9 +9,9 @@ import {
   RESUMELIST_REQUEST,
   RESUMELIST_SUCCESS,
   RESUMELIST_FAILURE,
-  ADD_RESUME,
-  DELETE_RESUME,
-} from "../constants";
+  RESUME_CREATE,
+  RESUME_DELETE,
+} from "../actions/resumeActions";
 
 const initialState: ResumeState = {
   current: null,
@@ -50,8 +50,8 @@ export const resume: Reducer<ResumeState, ResumeActions> = (
     case RESUMELIST_FAILURE: {
       return { ...state, loading: false };
     }
-    // case ADD_RESUME: {
-    //   return { ...state, list: [...state.list, action.resume] };
+    // case RESUME_CREATE: {
+    //   return { ...state, list: {...state.list [...state.list, action.resume]} };
     // }
     // case DELETE_RESUME: {
     //   const updated = [...state.list.data].filter(
