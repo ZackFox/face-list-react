@@ -1,36 +1,30 @@
 import React from "react";
 
 import { numToWord } from "../../helpers/numToWord";
-import Resume from "../../store/types";
+import Resume, { User } from "../../store/types";
 
 import getExperienceTerm from "../../helpers/getExperienceTerm";
 import EducationBlock from "./EducationBlock";
 import ExperienceBlock from "./ExperienceBlock";
+
+import defaultAvatar from "../../assets/avatar.jpg";
 import "./ResumeView.css";
 
 interface ResumeProps {
+  user: User | null;
   resume: Resume;
-  isLogined: boolean;
+  isLoggedIn: boolean;
   onEdit: () => void;
   deletelHandler: (id: number) => () => void;
 }
 
-const about = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-Ducimus, recusandae. 
-- Lorem ipsum dolor sit.
-- Lorem ipsum dolor sit.
-- Lorem ipsum dolor sit. 
-- Lorem ipsum dolor sit. 
-- Lorem ipsum dolor sit.
-`;
-
 const ResumeView: React.FunctionComponent<ResumeProps> = props => {
-  const { isLogined, resume, onEdit, deletelHandler } = props;
+  const { isLoggedIn, user, resume, onEdit, deletelHandler } = props;
   return (
     <div className="resume">
       <section className="resume-section resume-person">
         <div className="picture">
-          <img src={resume.photo} alt="" />
+          <img src={resume.photo ? resume.photo : defaultAvatar} alt="" />
         </div>
         <div className="details-group">
           <div className="d-left">
@@ -68,26 +62,29 @@ const ResumeView: React.FunctionComponent<ResumeProps> = props => {
           : null}
       </section>
 
-      <div className="resume-section education">
+      <section className="resume-section education">
         <h3>Образование</h3>
         {resume.education.length > 0
           ? resume.education.map((ed, index) => (
               <EducationBlock data={ed} key={index} />
             ))
           : "не указано"}
-      </div>
-
-      <section className="resume-section about">
-        <h3>О себе</h3>
-        <div className="about-text">{about}</div>
       </section>
 
-      {isLogined && (
-        <div className="resume-button">
-          <button className="button-edit" onClick={onEdit}>
+      {resume.about &&  <section className="resume-section about">
+        <h3>О себе</h3>
+        <div className="about-text">{resume.about}</div>
+      </section>}
+
+      {isLoggedIn && user && user.id === resume.owner && (
+        <div className="resume-controls">
+          <button className="button btn-apply" onClick={onEdit}>
             Редактировать
           </button>
-          <button className="button-delete" onClick={deletelHandler(resume.id)}>
+          <button
+            className="button btn-reset"
+            onClick={deletelHandler(resume.id)}
+          >
             Удалить
           </button>
         </div>
