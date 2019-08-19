@@ -1,25 +1,26 @@
-import React, { useState } from "react";
-import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
-import "./SearchBox.css";
+import './SearchBox.css';
 
 interface SearchProps extends RouteComponentProps {}
 
 const SearchBox: React.FunctionComponent<SearchProps> = props => {
-  const [search, setSearch] = useState("");
+  const { location, history } = props;
+  const [input, setInput] = useState('');
 
   const searchChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    setSearch(e.currentTarget.value || "");
+    setInput(e.currentTarget.value || '');
   };
 
   const submitHandler = (e: React.SyntheticEvent<any>) => {
     e.preventDefault();
-    props.location.search = search ? `?search=${search}` : "";
-    if (!props.location.pathname.includes("page")) {
-      props.history.push(`/page/1${props.location.search}`);
+    location.search = input ? `?position=${input}` : '';
+    if (!location.pathname.includes('page/')) {
+      history.push(`/page/1${location.search}`);
       return;
     }
-    props.history.replace(`/page/1${props.location.search}`);
+    history.replace(`/page/1${props.location.search}`);
   };
 
   return (
@@ -29,7 +30,7 @@ const SearchBox: React.FunctionComponent<SearchProps> = props => {
           type="text"
           className="search-box__input"
           onChange={searchChange}
-          value={search}
+          value={input}
           placeholder="Я ищу..."
         />
         <input
