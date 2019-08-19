@@ -1,23 +1,105 @@
 .app-header {
   background: #000;
+  width: 100%;
   color: #fff;
-  margin-bottom: 10px;
-  padding: 10px 0;
+  position: fixed;
+  border-bottom: 5px solid #673cad;
+  z-index: 10;
 }
 
 .header-flex {
   display: flex;
+  align-items: center;
 }
 
 .logo {
   color: #fff;
   font-size: 20px;
+  padding: 22px 0;
   text-decoration: none;
   font-weight: bold;
   margin-right: 50px;
 }
 
-.app-header__signin {
+.app-header .user-block,
+.app-header .menu-button {
   margin-left: auto;
-  background: #19c320;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.app-header .menu-button {
+  display: none;
+  width: 32px;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 28px;
+  height: 30px;
+  background: #673cad;
+  text-align: center;
+  border-radius: 4px;
+  position: relative;
+  transition: background 0.5s;
+  cursor: pointer;
+}
+
+.menu-button:before {
+  content: "\02630";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
+.menu-toggle:checked ~ .menu-button {
+  background: #9c27b0;
+}
+.menu-toggle:checked ~ .menu-button:before {
+  content: "\02716";
+}
+
+.menu-toggle:checked ~ .user-block {
+  right: 0;
+}
+
+@media screen and (max-width: 830px) {
+  .app-header .user-block {
+    width: 240px;
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    right: -550px;
+    transition: right 0.8s ease-in-out;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #303030;
+  }
+
+  .app-header .menu-button {
+    display: block;
+  }
+}
+@media screen and (max-width: 480px) {
+  .app-header {
+    padding-top: 5px;
+    padding-bottom: 22px;
+  }
+  .header-flex {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .logo {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+    margin-bottom: 5px;
+    padding: 5px 0;
+  }
+  .app-header .user-block {
+    top: 100px;
+    width: 100%;
+    padding: 20px 30px;
+  }
 }
