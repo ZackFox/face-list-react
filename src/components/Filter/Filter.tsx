@@ -1,64 +1,86 @@
-import React, { SyntheticEvent } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
-import qs from 'query-string';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router";
+import qs from "query-string";
 
-import './Filter.css';
+import { AppState } from "../../store";
+import { getCities } from "../../actions/citiesActions";
 
-interface FilterState {
-  gender: string;
-  city: string;
-  [key: string]: string;
+import CustomSelect from "../CustomSelect/CustomSelect";
+import "./Filter.css";
+
+interface FilterProps extends RouteComponentProps {
+  cities: string[];
+  getCities: () => void;
 }
 
-class Filter extends React.Component<RouteComponentProps, FilterState> {
-  static state = { city: '', gender: '' };
+const getQuery = (state: any) => {
+  const query: any = { ...qs.parse(location.search), ...state };
+  const params = Object.keys(query);
+  for (let p of params) {
+    if (query[p] === "") delete query[p];
+  }
+  return query;
+};
 
-  changeFilter = (e: SyntheticEvent<HTMLSelectElement>) => {
-    this.setState({ [e.currentTarget.name]: e.currentTarget.value });
-  };
+const Filter: React.FunctionComponent<FilterProps> = props => {
+  const [city, setCity] = useState("");
+  const [gender, setGender] = useState("");
 
-  onSubmit = () => {
-    const query = { ...qs.parse(location.search), ...this.state };
-    const params = Object.keys(query);
-    for (let p of params) {
-      if (query[p] === '') delete query[p];
+  useEffect(() => {
+    if (!props.cities.length) {
+      props.getCities();
     }
-    this.props.history.replace(`${location.pathname}?${qs.stringify(query)}`);
+  }, []);
+
+  const onReset = () => {
+    setCity("");
+    setGender("");
+    const query = getQuery({ city: "", gender: "" });
+    props.history.replace(`${location.pathname}?${qs.stringify(query)}`);
   };
 
-  render() {
-    return (
-      <div className="filter">
+  const onSubmit = () => {
+    const query = getQuery({ city, gender });
+    props.history.replace(`${location.pathname}?${qs.stringify(query)}`);
+  };
+
+  return (
+    <aside className="sidebar">
+      <div className="filters">
         <div className="filter-group">
           <div className="filter-group__title">Город</div>
-          <select
-            name="city"
+          <CustomSelect
             className="filter-group__select"
-            onChange={this.changeFilter}
-          >
-            <option selected />
-            <option value="москва">Москва</option>
-            <option value="минск">Минск</option>
-          </select>
+            initialValue={city}
+            defaultOption={"--любой--"}
+            values={props.cities}
+            changeHandler={(value: string) => setCity(value)}
+          />
         </div>
 
         <div className="filter-group">
           <div className="filter-group__title">Пол</div>
-          <select
-            name="gender"
+          <CustomSelect
             className="filter-group__select"
-            onChange={this.changeFilter}
-          >
-            <option selected />
-            <option value="мужчина">Мужчина</option>
-            <option value="женщина">Женщина</option>
-          </select>
+            initialValue={gender}
+            defaultOption={"--любой--"}
+            values={["мужчина", "женщина"]}
+            changeHandler={(value: string) => setGender(value)}
+          />
         </div>
-
-        <button onClick={this.onSubmit}>Применить</button>
       </div>
-    );
-  }
-}
+      <div className="filter-controls">
+        <button className="button btn-apply" onClick={onSubmit}>Применить</button>
+        <button className="button btn-reset" onClick={onReset}>Сбросить</button>
+      </div>
+    </aside>
+  );
+};
 
-export default withRouter(Filter);
+export default withRouter(
+  connect(
+    (state: AppState) => ({ cities: state.cities.data }),
+    { getCities },
+  )(Filter),
+);
