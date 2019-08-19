@@ -1,0 +1,112 @@
+.userbar {
+  width: 250px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+}
+
+.user-menu {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  position: relative;
+}
+
+.user-menu-title {
+  color: #fff;
+  text-align: center;
+  font-weight: 500;
+}
+
+.user-menu-dropdown {
+  display: none;
+  background: #303030;
+  position: absolute;
+  width: 220px;
+  top: 70px;
+  right: 0px;
+  padding: 15px;
+}
+.user-menu-dropdown ul {
+  list-style: none;
+  padding: 0;
+}
+.user-menu-dropdown .resume-link {
+  color: #fff;
+  cursor: pointer;
+}
+.resume-link:hover {
+  color: deepskyblue;
+}
+
+.user-menu:hover {
+  background: #303030;
+}
+.user-menu:hover .user-menu-dropdown {
+  display: block;
+}
+
+.button {
+  color: #fff;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  text-decoration: none;
+  vertical-align: middle;
+  line-height: 15px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+}
+
+.create-button {
+  background: #4caf50;
+  margin-right: 10px;
+}
+
+.logout-button {
+  background: goldenrod;
+}
+
+@media screen and (max-width: 830px) {
+  .userbar {
+    width: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: baseline;
+    position: relative;
+    padding: 0;
+  }
+  .create-button {
+    margin-left: auto;
+  }
+  .user-menu {
+    width: 100%;
+    height: auto;
+    padding: 0;
+  }
+  .user-menu-title {
+    padding: 0;
+  }
+  .userbar:hover {
+    background: transparent;
+  }
+  .userbar:hover .user-menu-dropdown,
+  .user-menu-dropdown {
+    width: 100%;
+    display: block;
+    position: absolute;
+    background: transparent;
+    padding: 0;
+    right: 0;
+    top: 43px;
+  }
+}
