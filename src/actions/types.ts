@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import { Action } from "redux";
 
 import {
   RESUME_REQUEST,
@@ -7,11 +7,11 @@ import {
   RESUMELIST_REQUEST,
   RESUMELIST_SUCCESS,
   RESUMELIST_FAILURE,
-  ADD_RESUME,
-  DELETE_RESUME,
-} from '../constants';
+  RESUME_CREATE,
+  RESUME_DELETE,
+} from "./resumeActions";
 
-import Resume from '../store/types';
+import Resume from "../store/types";
 
 interface ResumeRequest extends Action<typeof RESUME_REQUEST> {}
 
@@ -27,21 +27,27 @@ interface ResumeListRequest extends Action<typeof RESUMELIST_REQUEST> {}
 interface ResumeListFailure extends Action<typeof RESUMELIST_FAILURE> {}
 
 interface ResumeListSuccess extends Action<typeof RESUMELIST_SUCCESS> {
-  resumes: Resume[];
+  data: Resume[];
+  meta: { pages: number };
   error?: ErrorEvent;
 }
 
-interface ResumeAdd extends Action<typeof ADD_RESUME> {
+interface ResumeCreate extends Action<typeof RESUME_CREATE> {
   resume: Resume;
 }
 
-interface ResumeDelete extends Action<typeof DELETE_RESUME> {
+interface ResumeDelete extends Action<typeof RESUME_DELETE> {
   resume: Resume;
 }
 
-export interface Credentials {
+export interface LoginCredentials {
   email: string;
   password: string;
+}
+
+export interface RegCredentials extends LoginCredentials{
+  firstname: string;
+  lastname: string;
 }
 
 export type ResumeActions =
@@ -51,5 +57,5 @@ export type ResumeActions =
   | ResumeListRequest
   | ResumeListSuccess
   | ResumeListFailure
-  | ResumeAdd
+  | ResumeCreate
   | ResumeDelete;
