@@ -77,20 +77,29 @@
     margin-bottom: 10px;
   }
   .person-container {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
   .p-left {
-    flex-direction: column;
     width: 100%;
+    flex-direction: column;
+    text-align: center;
   }
   .p-right {
     width: 100%;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    margin: 10px 0;
+    margin-top: 20px;
+  }
+  .p-right .position {
+    text-align: left;
+  }
+  .p-right .salary {
+    white-space: nowrap;
   }
 
   .person-info {
     margin-bottom: 15px;
+    font-size: 18px;
   }
 }

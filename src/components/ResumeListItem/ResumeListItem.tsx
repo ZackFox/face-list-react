@@ -6,6 +6,7 @@ import { numToWord } from "../../helpers/numToWord";
 
 import "./ResumeListItem.css";
 import getExperienceTerm from "../../helpers/getExperienceTerm";
+import defaultAvatar from "../../assets/avatar.jpg";
 
 interface ResumeListItemProps {
   resume: Resume;
@@ -21,7 +22,7 @@ const ResumeListItem: React.FunctionComponent<ResumeListItemProps> = ({
       key={resume.id}
     >
       <div className="picture">
-        <img src={resume.photo} alt="" />
+        <img src={resume.photo ? resume.photo : defaultAvatar} alt="" />
       </div>
       <div className="person-container">
         <div className="p-left">
