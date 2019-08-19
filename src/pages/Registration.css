@@ -1,0 +1,25 @@
+.reg-form {
+  width: 328px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+}
+
+.reg-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 480px) {
+  .reg-form {
+    width: 100%;
+    padding: 20px 14px;
+  }
+
+  .reg-form .field {
+    width: 100%;
+  }
+}

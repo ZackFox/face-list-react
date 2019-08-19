@@ -51,9 +51,9 @@ const HomePage: React.FunctionComponent<HomeProps> = props => {
 
 export default connect(
   (state: AppState) => ({
-    resumes: state.resume.list.data,
-    meta: state.resume.list.meta,
-    loading: state.resume.loading,
+    resumes: state.resumes.list.data,
+    meta: state.resumes.list.meta,
+    loading: state.resumes.list.loading,
   }),
   { getResumesList },
 )(HomePage);

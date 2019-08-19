@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
-import Resume from "../store/types";
+import Resume, { User } from "../store/types";
 import { AppState } from "../store";
 
 import {
@@ -14,21 +14,19 @@ import LoadingBox from "../components/LoadingBox/LoadingBox";
 import ResumeForm from "../components/ResumeForm/ResumeForm";
 import ResumeView from "../components/ResumeView/ResumeView";
 
-interface ResumeProps {
-  resume: Resume | null;
-}
-
 interface ResumePageProps extends RouteComponentProps<{ id: string }> {
+  user: User | null;
   resume: Resume | null;
-  isLogined: boolean;
+  isLoggedIn: boolean;
   getResume: (id: number) => void;
-  updateResume: (resume: Resume) => void;
+  updateResume: (resume: Resume, callback: () => void) => void;
   removeResume: (id: number, redirect: () => void) => void;
 }
 
 const ResumePage: React.FunctionComponent<ResumePageProps> = props => {
   const {
-    isLogined,
+    isLoggedIn,
+    user,
     resume,
     getResume,
     updateResume,
@@ -46,7 +44,7 @@ const ResumePage: React.FunctionComponent<ResumePageProps> = props => {
   const toggleEdit = () => setEdit(!isEdit);
 
   const submitlHandler = (resume: Resume) => {
-    updateResume(resume);
+    updateResume(resume, () => toggleEdit());
   };
 
   const deletelHandler = (id: number) => () => {
@@ -56,20 +54,28 @@ const ResumePage: React.FunctionComponent<ResumePageProps> = props => {
   return (
     <div className="page resume-page">
       <div className="wrapper">
+        {resume && (
+          <button
+            className="button btn-back"
+            onClick={() => props.history.goBack()}
+          >
+            {"<< назад"}
+          </button>
+        )}
         {resume ? (
           isEdit ? (
             <ResumeForm
               {...resume}
-              cities={["Москва", "Санкт-петербург"]}
               cancelHandler={toggleEdit}
               submitlHandler={submitlHandler}
             />
           ) : (
             <ResumeView
+              user={user}
               resume={resume}
               onEdit={toggleEdit}
               deletelHandler={deletelHandler}
-              isLogined={isLogined}
+              isLoggedIn={isLoggedIn}
             />
           )
         ) : (
@@ -82,8 +88,9 @@ const ResumePage: React.FunctionComponent<ResumePageProps> = props => {
 
 export default connect(
   (state: AppState) => ({
-    resume: state.resume.current,
-    isLogined: state.user.isLogined,
+    user: state.user.data,
+    resume: state.resumes.current.data,
+    isLoggedIn: state.user.isLoggedIn,
   }),
   { getResume, updateResume, removeResume },
 )(ResumePage);
