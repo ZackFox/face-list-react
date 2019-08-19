@@ -1,0 +1,39 @@
+.reg-link {
+  color: #03a9f4;
+}
+
+.login-error {
+  margin-left: 20px;
+  color: red;
+  font-weight: 500;
+}
+.login-form {
+  margin-top: 5px;
+}
+
+.login,
+.password {
+  width: 150px;
+  padding: 5px;
+  border: 0;
+  margin-right: 3px;
+}
+
+.login-form .login-btn {
+  width: 60px;
+  padding: 5px 8px;
+  background: #03a9f4;
+}
+
+.login-form .login-btn:disabled {
+  background: #656575;
+  color: #cacaca;
+}
+
+@media screen and (max-width: 830px) {
+  .login-form .login,
+  .login-form .password {
+    width: calc(100% - 10px);
+    margin-bottom: 10px;
+  }
+}
