@@ -2,7 +2,6 @@ export interface User {
   id: number;
   firstname: string;
   lastname: string;
-  city: string;
   email: string;
   resumes: number[];
 }
@@ -13,46 +12,55 @@ export default interface Resume {
   firstname: string;
   lastname: string;
   age: number;
-  photo: string;
+  photo: string | null;
   gender: string;
   city: string;
   email: string;
   phone: string;
   position: string;
-  salary: string;
+  salary: number;
   experience: ExperienceItem[];
   education: EducationItem[];
   about: string;
-  [key: string]: any;
 }
 
 export class ExperienceItem {
+  id: number = 0;
   name: string = "";
   position: string = "";
   description: string = "";
   dateStart: string = "";
   dateEnd: string = "";
-  [key: string]: string;
 }
 
 export class EducationItem {
+  id: number = 0;
   name: string = "";
   speciality: string = "";
   dateStart: string = "";
   dateEnd: string = "";
-  [key: string]: string;
 }
 
 export interface UserState {
   readonly data: User | null;
-  readonly isLogined: boolean;
+  readonly isLoggedIn: boolean;
   readonly loading: boolean;
   readonly message: string;
 }
 
-export interface ResumeState {
-  readonly current: Resume | null;
-  readonly list: { data: Resume[]; meta: { pages: number } };
+export interface ResumeListState {
+  readonly data: Resume[];
+  readonly meta: { pages: number };
   readonly loading: boolean;
-  readonly errors?: string;
+}
+
+export interface CurrentResumeState {
+  readonly data: Resume | null;
+  readonly loading: boolean;
+}
+
+export interface CitiesState {
+  readonly data: string[];
+  readonly loading: boolean;
+  readonly error: Error | null;
 }

@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { UserState } from "./types";
+import { UserState, User } from "./types";
 import cookies from "js-cookie";
 
 import {
@@ -15,12 +15,12 @@ const token = cookies.get("token");
 
 const initialState: UserState = {
   data: null,
-  isLogined: !!token,
+  isLoggedIn: !!token,
   loading: false,
   message: "",
 };
 
-export const user: Reducer<UserState> = (state = initialState, action) => {
+const user: Reducer<UserState> = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_SUCCESS: {
       return { ...state, data: action.user, loading: false };
@@ -29,7 +29,7 @@ export const user: Reducer<UserState> = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        isLogined: false,
+        isLoggedIn: false,
         message: action.message,
       };
     }
@@ -37,13 +37,13 @@ export const user: Reducer<UserState> = (state = initialState, action) => {
       return { ...state, loading: true, message: "" };
     }
     case LOGIN_SUCCESS: {
-      return { ...state, isLogined: true };
+      return { ...state, isLoggedIn: true, data: action.user, loading: false };
     }
     case LOGIN_FAILURE: {
       return {
         ...state,
         loading: false,
-        isLogined: false,
+        isLoggedIn: false,
         message: action.message,
       };
     }
@@ -52,10 +52,12 @@ export const user: Reducer<UserState> = (state = initialState, action) => {
         ...state,
         data: null,
         loading: false,
-        isLogined: false,
+        isLoggedIn: false,
       };
     }
     default:
       return state;
   }
 };
+
+export default user;

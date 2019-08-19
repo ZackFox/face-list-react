@@ -1,6 +1,7 @@
-import { Reducer } from "redux";
+import { Reducer, combineReducers } from "redux";
+
+import { CurrentResumeState, ResumeListState } from "./types";
 import { ResumeActions } from "../actions/types";
-import { ResumeState } from "./types";
 
 import {
   RESUME_REQUEST,
@@ -8,58 +9,71 @@ import {
   RESUME_FAILURE,
   RESUMELIST_REQUEST,
   RESUMELIST_SUCCESS,
+  RESUME_UPDATE_OPTIMISTIC,
   RESUMELIST_FAILURE,
-  RESUME_CREATE,
-  RESUME_DELETE,
 } from "../actions/resumeActions";
 
-const initialState: ResumeState = {
-  current: null,
-  list: {
-    data: [],
-    meta: { pages: 0 },
-  },
+const initialListState: ResumeListState = {
+  data: [],
+  meta: { pages: 0 },
   loading: true,
-  errors: "",
 };
 
-export const resume: Reducer<ResumeState, ResumeActions> = (
-  state = initialState,
+const initialCurrentState: CurrentResumeState = {
+  data: null,
+  loading: true,
+};
+
+export const resumeList: Reducer<ResumeListState> = (
+  state = initialListState,
   action,
-): ResumeState => {
+): ResumeListState => {
   switch (action.type) {
-    case RESUME_REQUEST: {
-      return { ...state, loading: true };
-    }
-    case RESUME_SUCCESS: {
-      return { ...state, current: action.resume, loading: false };
-    }
-    case RESUME_FAILURE: {
-      return { ...state, loading: false };
-    }
     case RESUMELIST_REQUEST: {
-      return { ...state, loading: true, current: null };
+      return { ...state, loading: true };
     }
     case RESUMELIST_SUCCESS: {
       return {
         ...state,
+        data: action.list,
+        meta: action.meta,
         loading: false,
-        list: { data: action.data, meta: action.meta },
       };
     }
     case RESUMELIST_FAILURE: {
       return { ...state, loading: false };
     }
-    // case RESUME_CREATE: {
-    //   return { ...state, list: {...state.list [...state.list, action.resume]} };
-    // }
-    // case DELETE_RESUME: {
-    //   const updated = [...state.list.data].filter(
-    //     item => item.id !== action.resume.id,
-    //   );
-    //   return { ...state, list:{data updated }};
-    // }
     default:
       return state;
   }
 };
+
+export const currentResume: Reducer<CurrentResumeState> = (
+  state = initialCurrentState,
+  action,
+): CurrentResumeState => {
+  switch (action.type) {
+    case RESUMELIST_REQUEST: {
+      return { ...state, data: null };
+    }
+    case RESUME_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case RESUME_SUCCESS: {
+      return { ...state, data: action.resume, loading: false };
+    }
+    case RESUME_FAILURE: {
+      return { ...state, loading: false };
+    }
+    case RESUME_UPDATE_OPTIMISTIC: {
+      return { ...state, data: action.resume };
+    }
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  current: currentResume,
+  list: resumeList,
+});
