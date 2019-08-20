@@ -22,7 +22,7 @@ const schema = Yup.object().shape({
     .email("Некорректный адрес")
     .required("*обязательное поле"),
   password: Yup.string()
-    .length(5, "Короткий пароль")
+    .min(5, "Минимум 5 символов")
     .required("*обязательное поле"),
   passwordConfirm: Yup.string()
     .oneOf([Yup.ref("password")], "Пароль не совпадает")

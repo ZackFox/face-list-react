@@ -22,6 +22,9 @@ const ExperienceBlock: React.FunctionComponent<ExperienceBlockProps> = ({
         </span>
       </div>
       <p className="experience-position">{data.position}</p>
+      {data.description && (
+        <div className="experience-desc">{data.description}</div>
+      )}
     </div>
   );
 };

@@ -49,7 +49,7 @@ const ResumeView: React.FunctionComponent<ResumeProps> = props => {
       </section>
 
       <section className="resume-section experience">
-        <h3>
+        <h3 className="heading">
           Опыт работы
           <span className="full-experience">
             {`  ( ${getExperienceTerm(resume.experience)} )`}
@@ -63,7 +63,7 @@ const ResumeView: React.FunctionComponent<ResumeProps> = props => {
       </section>
 
       <section className="resume-section education">
-        <h3>Образование</h3>
+        <h3 className="heading">Образование</h3>
         {resume.education.length > 0
           ? resume.education.map((ed, index) => (
               <EducationBlock data={ed} key={index} />
@@ -72,7 +72,7 @@ const ResumeView: React.FunctionComponent<ResumeProps> = props => {
       </section>
 
       {resume.about &&  <section className="resume-section about">
-        <h3>О себе</h3>
+        <h3 className="heading" >О себе</h3>
         <div className="about-text">{resume.about}</div>
       </section>}
 
