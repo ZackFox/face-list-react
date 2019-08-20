@@ -173,23 +173,6 @@
 }
 
 @media screen and (max-width: 550px) {
-  .resume-person {
-    flex-direction: column;
-  }
-  .details-group {
-    flex-direction: column-reverse;
-  }
-  .resume .d-left,
-  .resume .d-right {
-    width: 100%;
-  }
-  .resume .d-right {
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  .salary {
-    text-align: left;
-  }
   .resume-form {
     width: 100%;
     padding: 20px;

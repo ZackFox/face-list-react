@@ -12,6 +12,10 @@
   margin-bottom: 20px;
 }
 
+.heading {
+  margin-bottom: 10px;
+}
+
 .resume-person,
 .details-group {
   display: flex;
@@ -56,16 +60,40 @@
 
 .experience-item {
   padding-left: 40px;
-  margin-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.experience-item::after {
+  content: "";
+  display: block;
+  width: 200px;
+  height: 1px;
+  background: rgb(243, 161, 161);
+  position: absolute;
+  bottom: 0;
+}
+
+.experience-item:last-child:after {
+  display: none;
 }
 
 .experience-header {
   display: flex;
 }
 
+.experience-position {
+  margin: 10px 0;
+}
 .experience-term {
   font-weight: 400;
   margin-left: 10px;
+}
+
+.experience-desc {
+  width: 370px;
+  white-space: pre-line;
 }
 
 .education-item {
@@ -88,8 +116,47 @@
   margin-right: 20px;
 }
 
-@media screen and (max-width: 790px) {
+@media screen and (max-width: 720px) {
   .resume {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 550px) {
+  .resume-person {
+    flex-direction: column;
+  }
+  .details-group {
+    flex-direction: column-reverse;
+  }
+  .resume .d-left,
+  .resume .d-right {
+    width: 100%;
+  }
+
+  .resume .d-right {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .salary {
+    text-align: left;
+  }
+
+  .full-experience {
+    display: block;
+  }
+
+  .experience-item,
+  .education-item {
+    padding-left: 0;
+  }
+  .experience-header {
+    flex-direction: column;
+  }
+  .experience-term {
+    margin-left: 0;
+  }
+  .experience-desc {
     width: 100%;
   }
 }

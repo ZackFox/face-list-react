@@ -3,6 +3,7 @@
 }
 
 .login-error {
+  font-size: 13px;
   margin-left: 20px;
   color: red;
   font-weight: 500;
